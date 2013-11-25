@@ -1,0 +1,27 @@
+Pair research with Geza
+
+(1) Map out import statements
+Python: syntax is a small part of it
+Better mileage in mapping knowledge of APIs.
+consider -methods- rather than syntax
+eg import statements/module names
+method names/objects
+also generalizable across languages
+https://pypi.python.org/pypi
+
+another benefit: broader target audience?
+
++ libraries have dependence between each other
+
+(2) Higher-level 
+
+Vocabulary vs Grammar
+Syntax, OOO etc is all grammar
+the objects,methods,apis is vocabulary
+
+BUT this depends on the application
+
+(3) How would we verify this? Metrics
+
+- point them to  a codebase they've never seen before, ask them to mark the concepts that they understand and not - or small quizzes. or mark the parts that you don't understand.
+

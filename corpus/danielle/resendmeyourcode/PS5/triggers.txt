@@ -1,0 +1,32 @@
+# trigger file - if you've done through part 11 but no stories are popping
+# up, you should edit this file to contain triggers that will fire on current
+# news stories!
+# Problem 11: 
+
+# title trigger named t1
+t1 TITLE Obama
+
+# title trigger named t2
+t2 TITLE Romney
+
+# title trigger named t3
+t3 TITLE Mitt
+
+#title trigger named t4
+t4 TITLE Barack
+
+#composite trigger named t5
+t5 AND t1 t2
+
+# composite trigger named t6
+t6 AND t3 t4
+
+#not trigger named t7
+t7 NOT t6
+
+# phrase trigger named t8
+t8 PHRASE Presidential Debate
+
+# the trigger set contains t5, t7 and t8
+ADD t5 t6 t7
+

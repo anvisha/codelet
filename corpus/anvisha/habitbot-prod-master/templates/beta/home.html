@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block head_title %}Home{% endblock %}
+{% block head_extra %}
+<script type="text/javascript" src="/media/maketweet.js"></script>
+<script type="text/javascript" src="/media/colorbox/colorbox/jquery.colorbox.js"></script>
+<link rel="stylesheet" href="/media/colorbox.css" />
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <div id="welcome">Welcome, @{{ participant.twitterid }}!</div>
+{% else %}
+    <div id="welcome">Welcome!</div>
+{% endif %}
+<p />
+<div id="blurb">habitbot helps you form and maintain habits and goals. When you set a goal, we hold you accountable by telling all of your twitter followers if you don't make the progress you promise. </div>
+<p />
+    <div><h3>Sign up for an invitation</h3>
+        <form method="post" action="/invite/" id="signup">{% csrf_token %}
+            <div><label>What's your name?</label> <input type="text" name="participantname" id="participantname" size="50" /></div>
+	    <div><label>What's your twitterid?</label> <input type="text" name="twitterid" id="twitterid" size="50" /></div>
+        <div>How did you hear about habitbot?<input type="text" name="howheard" id="howheard" size="80"/></div>
+        <div>What sort of habits are you interested in forming?<input type="text" name="habit" id="habit" size="100"/></div>
+            <div id='send'><input type="submit" value="Submit" /></div>
+        </form>
+{% endblock %}

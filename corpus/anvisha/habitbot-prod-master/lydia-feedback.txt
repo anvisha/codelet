@@ -1,0 +1,21 @@
+need an example to start
+sign in happens first
+sign up is not clear
+thanks is blank
+punishment: "if i don't do it, what my twitter followers will see"
+didn't read explanation
+displays time locally
+hashtag isn't in the thing
+check for 'to' and delete it
+check for punctuation at the end of the goal
+home doesn't link to home
+
+must be way more visual
+didn't read explanation at all
+flow chart
+unclear what actually gets tweeted
+use the cat to tie that together
+
+don't know when this is supposed to stop 
+maybe set end points?
+

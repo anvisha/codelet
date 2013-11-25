@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block filler %}
+{% include 'herounit.html' %}
+{% include 'explain.html' %}
+
+<div class="row">
+	<div class="span4" align="center">
+		<p><a class="btn" href="/login">Sign In »</a></p>
+	</div>
+	<div class="span4" align="center">
+		<p><a class="btn" href="/contact">Sign Up »</a></p>
+	</div>
+	<div class="span4" align="center">
+		<p><a class="btn" href="/entercode">Enter Invite »</a></p>
+	</div>
+</div>
+
+
+{% block invite %}
+{% endblock invite %}
+
+{% endblock filler %}
+
+{% block template_name %}
+if_out.html
+{% endblock template_name %}

@@ -1,0 +1,71 @@
+FORMS
+Users can't ruin our database with forms.
+
+ACCOUNT CREATION AND PERMISSIONS
+Users can always give us their Twitter auth info. 
+However, even if they do, they should be in our auth & invited section before being able to do anything. 
+(incl. goals, pingfriends, etc)
+
+INVITE SYSTEM
+We are capturing info from this form successfully. 
+When users get notified of an invite, they can go to the form and submit it and everything works, it doesn't require a second reload.
+
+INVITE FLOW
+We only have to do stuff for users once: give them an invite code and notify them. 
+We don't have to touch any other tables for this.
+
+GOAL CREATION
+Users input their goals and all of the fields are actually saved. 
+We validate the form somehow so that they can't submit weird crap, especially time. 
+Users can set times of day for punishment, reward, and remind messages. 
+Users must send a tweet before they can create the goal. 
+The tweet is pre-populated with a base tweet based on their goal content. 
+We catch any errors that twitter throws in goal creation problems. 
+We don't let users try to tweet about the same goal twice.
+
+GOAL CHANGING
+Users get an appropriate time (times) when changing their goals. 
+We drop down butter bars for updating in general, as well as for marking your goal as done or paused.
+
+SUCCESS FUNCTION
+We check for @replies to habitbot. 
+When users send a message, we mark their goal as done and do not tweet about it later. 
+We reset that at the appropriate time. 
+When users have been successful for seven consecutive days, we send a reward tweet. 
+It doesn't matter when it starts, all that matters is that they've been good for seven days in a row.
+
+FAIL FUNCTION
+When users don't send a reply to habitbot, we send their punishment message from them at the appointed time. 
+After the message is sent, we reset their goal (or leave it unchecked). 
+We only send one punishment message a day at the appropriate time. 
+We track how many consecutive days they have failed.
+
+REMINDER FUNCTION
+Unless users have already marked their goal as done, we send users their reminder message at the appropriate time.
+Part of the reminder message includes "reply to mark this goal as done" so that they can't say 'thanks' and mark it as done accidentally. 
+
+LOGGING
+We keep track of user's initial tweet. 
+We keep track of their visits to the website and what they do in those visits. 
+We keep track of all tweets that habitbot sends as a user. 
+We keep track of all @replies a user sends to habitbot. 
+We keep track of all tweets a user sends at all. 
+We keep track of all @replies a user gets, at least the ones in reply to a habitbot tweet. 
+
+MSG QUEUE
+Things in the message queue are sent right away. 
+Things in the message queue are marked with the appropriate field. 
+We use datetime as part of our primary key so users don't have too many things in the queue or too few.
+
+CRON
+We poll twitter for new @replies regularly. 
+We poll twitter for new things sent to/from/etc our users regularly.
+We check for messages that need to be sent regularly. 
+We successfully get those into our msg queue. 
+
+EXPERIMENTAL CONDITIONS
+We have a field for participants in one of our study conditions.
+Participants are assigned to study conditions manually.
+TBD
+
+PINGING FRIENDS

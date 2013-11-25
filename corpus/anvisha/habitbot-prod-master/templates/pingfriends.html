@@ -1,0 +1,115 @@
+{%extends base_template %}
+
+{% block head_title %}
+{% endblock %}
+
+{%block content%}
+
+<div class="container">
+	<h2>Add friends to ping!</h2>
+	<p>Click on image to de-select</p>
+	<div class="row">
+		<div class="span3 friend" align="center">
+				<img src="https://twitter.com/images/resources/twitter-bird-white-on-blue.png" class="img-rounded" width="100" height="100">
+
+		</div>
+		<div class="span3 friend" align="center">
+			<img src="https://twitter.com/images/resources/twitter-bird-white-on-blue.png" class="img-rounded" width="100" height="100">
+		</div>
+		<div class="span3 friend" align="center">
+			<img id="friend3img" src="https://twitter.com/images/resources/twitter-bird-white-on-blue.png" class="img-rounded" width="100" height="100">
+		</div>
+		<div class="span3" align="center">
+		</div>
+
+	</div>
+	<h2 align="center">Select 3 friends from the list below</h2>
+	<div class="container">
+		{% for friend in friends_list %}
+		<div class="row" >
+			<div class="span4">
+				<div class="friendbar" friendname = {{friend.name}} handle= {{friend.screen_name}} imgurl={{friend.profile_image_url}} style="background-image: "{{friend.profile_image_url}}"; color:blue;">
+					<p>{{friend.screen_name}}</p>
+				</div>
+				<!--<div class= "span3">-->
+					
+			</div>
+		
+		</div>
+
+		{% endfor %}
+	</div>
+</div>
+
+<script>
+	var selectedFriends = new Array();
+	var selectedFriendsHandles = new Array();
+
+	function friendSelected(friendname, handle, imgurl){
+		selectedFriends.push({
+			name: friendname,
+			handle: handle,
+			imgurl: imgurl
+		});
+		selectedFriendsHandles.push(handle);
+		update();
+	};
+
+	function friendDeselected(index){
+		selectedFriends.splice(index, 1);
+		selectedFriendsHandles.splice(index,1);
+		update();
+	}
+	
+	function update() {
+		var updateBox = function(box, item) {
+			if (item == null) {
+				box.find("img").attr("src", "https://twitter.com/images/resources/twitter-bird-white-on-blue.png");
+				box.find("p").remove();
+
+			} else {
+				box.find("img").attr("src", item.imgurl);
+				box.find("p").remove();
+				box.append($("<p>").text(item.handle));
+				box.append($("<p>").text(item.name));
+			}
+		};
+		for(var i=0;i<3;i++) {
+			updateBox(friendBoxes[i], i<selectedFriends.length?selectedFriends[i]:null);
+		}
+	}
+		
+
+	$(".friendbar").click(function()
+	{
+		var name= $(this).attr("friendname");
+		var handle = $(this).attr("handle");
+		var imgurl = $(this).attr("imgurl");
+		if(selectedFriendsHandles.indexOf(handle)!=-1){
+			alert("You have already selected this friend. Please select another friend!");
+		}
+		else if(selectedFriends.length>=3){
+			alert("You have already chosen 3 friends, which is the limit at this time");
+
+		}
+		else{
+			friendSelected(name, handle, imgurl);
+			$(this).attr("style", "border-style: solid; border-color: #00acee; -webkit-border-radius: 8px;-moz-border-radius: 8px; border-radius: 8px; border-width: 2px;");
+		}
+
+
+	});
+
+	var friendBoxes = $.map($(".friend"), function(i){return $(i)});
+	for(var i=0;i<3;i++) {
+		(function(ii){
+			friendBoxes[i].click(function() {
+				friendDeselected(ii);
+			});
+		})(i);
+	}
+
+
+</script>
+
+{%endblock %}

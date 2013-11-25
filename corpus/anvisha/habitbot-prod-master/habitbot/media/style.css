@@ -1,0 +1,17 @@
+
+
+h1 {
+    font-family: helvetica;
+    color: grey;
+}
+
+
+#header {
+    font-family: helvetica;
+    color: grey;
+}
+
+.friendbar{
+	color: blue;
+	border: 5px solid red;
+}

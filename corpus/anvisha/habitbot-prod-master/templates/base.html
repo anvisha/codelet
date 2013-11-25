@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>habitbot - {% block head_title %} - ALPHA!{% endblock %}</title>
+	    <link rel="stylesheet" href="/media/css/style.css" />
+	    <link rel="stylesheet" href="/media/bootstrap/css/bootstrap.css" />
+	    <link rel="stylesheet" href="/media/override.css" />
+	    <link rel="stylesheet" href="/media/bootstrap/css/bootstrap-responsive.css" />
+		<link href="/media/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	    <link href="/media/bootstrap-timepicker.max.css" rel="stylesheet">
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.js"></script>
+	    <script type="text/javascript" src="/media/bootstrap/js/bootstrap.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
+		<script type="text/javascript" src="/media/bootstrap-timepicker.min.js"></script>
+	    {% block head_extra %}
+	    {% endblock head_extra %}
+	</head>
+
+	<body>
+		<div id="wrap">
+			<div class="navbar navbar-inverse navbar-fixed-top">
+				<div class="navbar-inner">
+					<div class="container">
+						<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</a>
+						<a class="brand" href="/">Habitbot</a>
+						<div class="nav-collapse collapse">
+							<ul class="nav">
+								<li class="active"><a href="/">Home</a></li>
+								<li><a href="#about">About</a></li>
+								<li><a href="#contact">Contact</a></li>
+							</ul>
+							<div class="navbar-form pull-right">
+								<ul class="nav">
+									{% if user.is_authenticated and participant.invited %}
+										<li><a>Welcome, @{{ participant.twitterid }}!</a></li>
+									{% else %}
+										<li><a>Welcome!</a></li>
+									{% endif %}
+									{% if user.is_authenticated %}
+										<li><a href="/logout">Logout</a></li>
+									{% endif %}
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="content">
+				<div class="container">
+					{% block filler %}
+					{% endblock filler %}
+				</div>
+			</div>
+			<div id="push"></div>
+		</div>
+		<div id="footer">
+			<div class="container">
+				<p class="muted credit">
+					Habitbot is a research system from <a href="http://uid.csail.mit.edu">MIT CSAIL</a>, by <a href="http://twitter.com/katrina_">@katrina_</a> and <a href="http://twitter.com/anvishapai">@anvishapai</a>. 
+				</p>
+				<p class="muted credit">
+					Email <a href="mailto:habitbot+footer@csail.mit.edu">our list</a> with questions, comments, animated gifs.
+				</p>
+				<p class="muted credit">
+					This uses template 
+					{% block template_name %}
+					{% endblock template_name %}. 
+					And base_template var {{ base_template }}.
+				</p>
+			</div>
+		</div>
+	</body>
+</html>

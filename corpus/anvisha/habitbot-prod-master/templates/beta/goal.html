@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block head_title %}{{ goal.goalname }}{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <div>Welcome, @{{ participant.twitterid }}!</div>
+{% endif %}
+<p />
+<div>habitbot helps you set and keep goals. When you set a goal, we hold you accountable by telling all of your twitter followers if you don't make the progress you promise. </div>
+<p />
+<div id="summary">First, set a goal in the system below. This should be something you want to do daily, like practice ukulele, get to Inbox Zero, do yoga, or eat a salad. Then tell us on twitter (just tweet something to @habitbot) when you do it. If you don't do it, we'll send a tweet from your account with the message below, and all of your friends will see it! </div>
+<div><h3>Your goal:</h3>
+
+    {% if changed %}
+    <div>Change successful!</div>
+    {% endif %}
+    <form method="post" action="/goals/{{ goal.id }}">{% csrf_token %}
+        <div>What is your goal? <input type="text" name="goalname" size="50" value="{{ goal.goalname }}"/></div>
+	    <div>What hashtag describes your goal? <input type="text" name="hashtag" size="50" value="{{ goal.hashtag }}"/>
+        <div>What do we tweet if you're unsuccessful?<input type="text" name="punishmsg" size="140" value="{{goal.punishmsg }}"/></div>
+        <div>What do we tweet if you're successful for a week?<input type="text" name="rewardmsg" size="140" value="{{goal.rewardmsg }}"/> <input type="checkbox" name="donttweet" value="{{ goal.donttweet }}"/> Don't tweet this</div>
+        <div>What do we tweet to remind you to input your goal?<input type="text" name="remindmsg" size="140" value="{{goal.remindmsg }}"/></div>
+        <div>What day do we remind you to input your goal? 
+             <select name="remind_dow" value="{{ goal.remind_dow }}">
+                <option value=0> Monday </option>
+                <option value=1> Tuesday </option>
+                <option value=2> Wednesday </option>
+                <option value=3> Thursday </option>
+                <option value=4> Friday </option>
+                <option value=5> Saturday </option>
+                <option value=6> Sunday </option>
+                <option value=*> Everyday </option>
+            </select>
+        </div>
+        <div>What time do we remind you to input your goal?<input type="text" name="remind_tod" size="20"
+            value="{{goal.remind_tod}}"/></div>
+        <div>I have done this today: <input type="checkbox" name="is_done_today" {% if goal.is_done_today %}checked="checked"{% endif %}/></div>
+        <div>I want to pause this goal: <input type="checkbox" name="is_paused" {% if goal.is_paused %}checked="checked"{% endif %} /></div>
+        <div><input type="submit" value="Update" /></div>
+    </form>
+</div>
+{% endblock %}

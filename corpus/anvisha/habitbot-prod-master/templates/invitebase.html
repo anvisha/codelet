@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>habitbot - {% block head_title %} - ALPHA!{% endblock %}</title>
+    <link rel="stylesheet" href="/media/css/style.css" />
+    <link rel="stylesheet" href="/media/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="/media/override.css" />
+    <link rel="stylesheet" href="/media/bootstrap/css/bootstrap-responsive.css" />
+
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.js"></script>
+    <script type="text/javascript" src="/media/bootstrap/js/bootstrap.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
+    {% block head_extra %}
+    {% endblock %}
+  </head>
+
+  <body>
+  	<div id="wrap">
+		<div class="navbar navbar-inverse navbar-fixed-top">
+		      <div class="navbar-inner">
+		        <div class="container">
+		          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		          </a>
+		          <a class="brand" href="/">Habitbot</a>
+		          <div class="nav-collapse collapse">
+		            <ul class="nav">
+		              <li class="active"><a href="#">Home</a></li>
+		              <li><a href="#about">About</a></li>
+		              <li><a href="#contact">Contact</a></li>
+		            </ul>
+		            <div class="navbar-form pull-right">
+						<ul class="nav">
+							{% if user.is_authenticated and participant.invited %}
+								<li><a>Welcome, @{{ participant.twitterid }}!</a></li>
+						    {% else %}
+						        <li><a>Welcome!</a></li>
+						    {% endif %}
+							{% if user.is_authenticated %}
+					        	<li><a href="/logout">Logout</a></li>
+					        {% endif %}
+						</ul>
+		            </div>
+		          </div>
+		        </div>
+		      </div>
+		</div>
+
+	    <div id="content">
+			<div class="container">
+				<p />
+				{% if user.is_authenticated and participant.invited %}
+			    	{% include 'herounit.html' %}
+		    		{% include 'explain.html' %}
+		    		<div class="alert alert-success">
+		    			<button type="button" class="close" data-dismiss="alert">&times;</button>
+  						<strong>Yay!</strong> You're already logged in and have an invite.
+		    		</div>
+			    {% elif user.is_authenticated and not participant.invited %}
+					{% include 'herounit.html' %}
+		    		{% include 'explain.html' %}
+		    		<div class="alert">
+		    			<button type="button" class="close" data-dismiss="alert">&times;</button>
+  						Even though you've already authenticated through Twitter, you need an invite from the system. <br />
+  						<a href="mailto:kp+hb@mit.edu">Email us</a> if you think you've received this message in error.
+		    		</div>
+		    		{% block content %}
+			    	{% endblock %}
+				{% else %}
+					{% include 'herounit.html' %}
+		    		{% include 'explain.html' %}
+		    		<div class="alert">
+		    			<button type="button" class="close" data-dismiss="alert">&times;</button>
+  						You need an invite from the system, and to authenticate using Twitter, before you can use Habitbot. <br />
+  						<a href="mailto:kp+hb@mit.edu">Email us</a> if you think you've received this message in error.
+		    		</div>
+					<div class="row">
+						<div class="span4" align="center">
+							<p><a class="btn" href="/login">Sign In »</a></p>
+						</div>
+						<div class="span4" align="center">
+							<p><a class="btn" href="/contact">Sign Up »</a></p>
+						</div>
+						<div class="span4" align="center">
+							<p><a class="btn" href="/entercode">Enter Invite »</a></p>
+						</div>
+					</div>
+				{% endif %}
+			</div>
+	    </div>
+		<div id="footer">
+			<div class="container">
+				<p class="muted credit">Example courtesy <a href="http://martinbean.co.uk">Martin Bean</a> and <a href="http://ryanfait.com/sticky-footer/">Ryan Fait</a>.</p>
+			</div>
+	    </div>
+	</div>
+  </body>
+</html>

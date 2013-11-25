@@ -1,0 +1,65 @@
+<div class="control-group">
+	<label class="control-label" for="goalname">What is your goal?</label>
+	<div class="controls ">
+		<input type="text" name="goalname" id="goalname" size="50" value="{{ goal.goalname }}" />
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label" for="hashtag">What hashtag describes your goal?</label>
+	<div class="controls">
+		<input type="text" name="hashtag" id="hashtag" size="50" {% if goal %} value="{{ goal.hashtag }}" {% else %} value="#" {% endif %}/>
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label" for="punishmsg">What do we tweet if you're unsuccessful?</label>
+	<div class="controls">
+		<input type="text" name="punishmsg" id="punishmsg" size="100" value="{{ goal.punishmsg }}" />
+	</div>
+	<div>
+		<p>If you don't check in with @habitbot, this message is sent from your Twitter account daily. <br /></p>
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label" for="rewardmsg">What do we tweet if you're successful for a week? </label>
+	<div class="controls">
+		<input type="text" name="rewardmsg" id="rewardmsg" size="100" value="{{ goal.rewardmsg }}" />
+	</div>
+	<div>
+		When you check in every day for a week, we send this message from your account. <br />
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label" for="remindmsg">What do we tweet to remind you to check in?</label>
+	<div class="controls">
+		<input type="text" name="remindmsg" id="remindmsg" size="100" value="{{ goal.remindmsg }}" />
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label" for="remind_dow">Which days should we remind you?</label>
+	<div class="controls">
+		<select name="remind_dow" id="remind_dow" value="{{ goal.remind_dow }}" >
+			<option value=*> Everyday </option>
+			<option value=0> Monday </option>
+			<option value=1> Tuesday </option>
+			<option value=2> Wednesday </option>
+			<option value=3> Thursday </option>
+			<option value=4> Friday </option>
+			<option value=5> Saturday </option>
+			<option value=6> Sunday </option>
+		</select>
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label" for="remind_tod">What time should we send your reminder?</label>
+	<div class="controls">
+		<div class="bootstrap-timepicker">
+			<div class="input-append">
+				<input type="text" name="remind_tod" id="remind_tod" value="{{ goal.remind_tod }}" />
+				<span class="add-on"><i class="icon-time"></i></span>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$('#remind_tod').timepicker();
+</script>
