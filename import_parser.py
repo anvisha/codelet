@@ -26,7 +26,7 @@ def parse(filename):
 	#import [pkg]
 	for m in re.finditer("import (\w+)\n", text):
 		pkg = m.group(1)
-		pkgs[pkg] = find_function_calls(pkg, None, text)
+		pkgs[pkg] = max(find_function_calls(pkg, None, text),1)
 
 	#from [pkg] import [sub,sub,sub...]
 	for m in re.finditer("from (\w+) import (.+)", text):
@@ -38,17 +38,17 @@ def parse(filename):
 				total_count += find_function_calls(None, sub.strip(), text)
 			else:
 				total_count+=1
-		pkgs[pkg] = total_count
+		pkgs[pkg] = max(total_count,1)
 	return pkgs
 
 def find_function_calls(pkg, function, text):
 	call_count = 0
 	if function == None and pkg!="*":
-		for calls in re.finditer(pkg, text):
+		for calls in re.finditer(pkg+"\.", text):
 			call_count +=1
 		return max(0,call_count-1)
 	elif pkg==None and function!="*":
-		for calls in re.finditer(function, text):
+		for calls in re.finditer(function+"(\.|\()", text):
 			call_count+=1
 		return max(0,call_count-1)
 	else:

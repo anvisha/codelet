@@ -36,7 +36,7 @@ def write_metrics():
 	f = open('results.txt','w')
 	p = open('intersects.txt', 'w')
 	path = '/Users/anvisha/corpus/'
-	names = ['anvisha', 'danielle', 'rob', 'philip', 'anant', 'jeremy', 'doug', 'taylor', 'angela', 'vivaek']
+	names = ['anvisha', 'danielle', 'philip', 'anant']
 	metrics = [(name,get_metrics(path+name)) for name in names]
 	f.write(str(metrics))
 	#for i in range(4):
