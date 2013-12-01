@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<div id="chart"></div>
+<meta charset="utf-8">
+<style>
+
+text {
+  font: 10px sans-serif;
+}
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+// var json = {"name": "anant",
+// "children": [{"name": "utils", "size":3},{"name": "cmd2", "size":2},{"name": "subprocess", "size":2},{"name": "getpass", "size":2},{"name": "teleport", "size":19},{"name": "psycopg2", "size":3},{"name": "BeautifulSoup", "size":2},{"name": "re", "size":71},{"name": "json", "size":17},{"name": "collections", "size":6},{"name": "config", "size":17},{"name": "relay", "size":21},{"name": "models", "size":321},{"name": "db", "size":227},{"name": "stem", "size":1},{"name": "util", "size":2},{"name": "scipy", "size":4},{"name": "datahub", "size":15},{"name": "constants", "size":2},{"name": "thrift", "size":0},{"name": "utc", "size":2},{"name": "hashlib", "size":1},{"name": "task", "size":3},{"name": "logging", "size":3},{"name": "os", "size":36},{"name": "shlex", "size":0},{"name": "lamson", "size":2},{"name": "optparse", "size":1},{"name": "multiprocessing", "size":2}]}
+
+var json ={"name":"danielle", "children":[{"name":"__future__top", "children":[{"name": "__future__", "size":0}]},{"name":"stringtop", "children":[{"name": "string", "size":89}]},{"name":"UserDicttop", "children":[{"name": "UserDict", "size":12}]},{"name":"unittesttop", "children":[{"name": "unittest", "size":7}]},{"name":"randomtop", "children":[{"name": "random", "size":64}]},{"name":"htmlentitydefstop", "children":[{"name": "htmlentitydefs", "size":3}]},{"name":"matplotlibtop", "children":[{"name": "matplotlib", "size":6}]},{"name":"clustertop", "children":[{"name": "cluster", "size":4}]},{"name":"StringIOtop", "children":[{"name": "StringIO", "size":1}]},{"name":"tracebacktop", "children":[{"name": "traceback", "size":2}]},{"name":"pprinttop", "children":[{"name": "pprint", "size":3}]},{"name":"feedparsertop", "children":[{"name": "feedparser", "size":1}]},{"name":"chardettop", "children":[{"name": "chardet", "size":8}]},{"name":"gziptop", "children":[{"name": "gzip", "size":15}]},{"name":"numpytop", "children":[{"name": "numpy", "size":0}]}]}
+
+var r = 960,
+    format = d3.format(",d"),
+    fill = d3.scale.category20c();
+
+var bubble = d3.layout.pack()
+    .sort(null)
+    .size([r, r])
+    .padding(1.5);
+
+var vis = d3.select("#chart").append("svg")
+    .attr("width", r)
+    .attr("height", r)
+    .attr("class", "bubble");
+
+
+  var node = vis.selectAll("g.node")
+      .data(bubble.nodes(classes(json))
+      .filter(function(d) { return !d.children; }))
+    .enter().append("g")
+      .attr("class", "node")
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+  node.append("title")
+      .text(function(d) { return d.className + ": " + format(d.value); });
+
+  node.append("circle")
+      .attr("r", function(d) { return d.r; })
+      .style("fill", function(d) { return fill(d.packageName); });
+
+  node.append("text")
+      .attr("text-anchor", "middle")
+      .style("font-size", "20px") 
+      .attr("dy", ".3em")
+      .text(function(d) { return d.className.substring(0, d.r / 3); });
+
+// Returns a flattened hierarchy containing all leaf nodes under the root.
+function classes(root) {
+  var classes = [];
+
+  function recurse(name, node) {
+    if (node.children) node.children.forEach(function(child) { recurse(node.name, child); });
+    else classes.push({packageName: name, className: node.name, value: node.size});
+  }
+
+  recurse(null, root);
+  return {children: classes};
+}
+
+</script>
