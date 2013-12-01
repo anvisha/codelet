@@ -10,7 +10,11 @@ def crawl_dir(dirname):
 	return babies
 
 def get_metrics(dirname):
-	babies = crawl_dir(dirname)
+	package_file = open('pypi_list.txt')
+	exec(package_file) #package_list is name of the master list of public python modules
+	std_package_file = open('std_packages.txt')
+	exec(std_package_file) #std_package_list
+	babies = crawl_dir(dirname) 
 	filenames = []
 	excluded=[]
 	all_imports = {}
@@ -18,7 +22,7 @@ def get_metrics(dirname):
 		imports = ip.parse(root+"/"+f)
 		filenames.append(f[:-3])
 		for m in imports:
-			if m not in filenames:
+			if m in package_list or m in std_package_list:
 				if m in all_imports:
 					all_imports[m] += 1
 				else:
