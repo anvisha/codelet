@@ -31,7 +31,7 @@ def get_metrics(dirname):
 def write_metrics():
 	f = open('results.txt','w')
 	p = open('intersects.txt', 'w')
-	path = '/Users/anvisha/codelet/corpus/'
+	path = '/Users/anvisha/corpus/'
 	names = ['anvisha', 'danielle', 'rob', 'philip']
 	metrics = [(name,get_metrics(name)) for name in names]
 	for name in names:
