@@ -1,4 +1,5 @@
-from example import *
+from example import function_1, function_2
+import numpy
 
 def main():
 	function_1()

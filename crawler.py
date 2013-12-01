@@ -19,30 +19,26 @@ def get_metrics(dirname):
 	excluded=[]
 	all_imports = {}
 	for (root,f) in babies:
-		imports = ip.parse(root+"/"+f)
+		print f,"hihi"
+		file_imports = ip.parse(root+"/"+f)
 		filenames.append(f[:-3])
-		for m in imports:
+		for m in file_imports.keys():
 			if m in package_list or m in std_package_list:
 				if m in all_imports:
-					all_imports[m] += 1
+					all_imports[m] += file_imports[m]
 				else:
-					all_imports[m] = 1
+					all_imports[m] = file_imports[m]
 			else:
 				excluded.append(m)
-	print excluded
 	return all_imports
 
 def write_metrics():
 	f = open('results.txt','w')
 	p = open('intersects.txt', 'w')
 	path = '/Users/anvisha/corpus/'
-	names = ['anvisha', 'danielle', 'rob', 'philip']
-	metrics = [(name,get_metrics(name)) for name in names]
-	for name in names:
-		metrics = get_metrics(path+name)
-		f.write(name+'\n')
-		f.write(str(metrics))
-	print metrics
+	names = ['anvisha', 'danielle', 'rob', 'philip', 'anant', 'jeremy', 'doug', 'taylor', 'angela', 'vivaek']
+	metrics = [(name,get_metrics(path+name)) for name in names]
+	f.write(str(metrics))
 	#for i in range(4):
 	#	for j in range(i+1,4):
 	#		inter_set = set(metrics[i][1]) & set(metrics[j][1])

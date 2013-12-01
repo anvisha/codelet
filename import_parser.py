@@ -16,20 +16,44 @@ def get_modules(filename):
 def parse(filename):
 	f = open(filename)
 	text=f.read()
-	pkgs = []
-	#import x
-	for m in re.finditer("from (\w+) import (\w+)|(\*)|import (\w+)", text):
-		if(m.group(1) != None):
-			if(m.group(2) != None):
-				pkgs.append(m.group(1))
-				#TODO: Update this to include more granularity like in comment below
-				#pkgs.append(m.group(1)+"."+m.group(2))
-			elif(m.group(3)!=None):
-				pkgs.append(m.group(1))
-		#from \w+ import *
-		elif(m.group(4)!= None):
-			pkgs.append(m.group(4))
+	pkgs = {}
+	#import [pkg] as [alias]
+	for m in re.finditer("import (\w+) as (\w+)", text):
+		pkg = m.group(1)
+		alias = m.group(2)
+		pkgs[pkg] = find_function_calls(alias, None, text)
+
+	#import [pkg]
+	for m in re.finditer("import (\w+)\n", text):
+		pkg = m.group(1)
+		pkgs[pkg] = find_function_calls(pkg, None, text)
+
+	#from [pkg] import [sub,sub,sub...]
+	for m in re.finditer("from (\w+) import (.+)", text):
+		pkg = m.group(1)
+		subs = m.group(2).split(",")
+		total_count = 0
+		for sub in subs:
+			if sub!="*":
+				total_count += find_function_calls(None, sub.strip(), text)
+			else:
+				total_count+=1
+		pkgs[pkg] = total_count
 	return pkgs
+
+def find_function_calls(pkg, function, text):
+	call_count = 0
+	if function == None and pkg!="*":
+		for calls in re.finditer(pkg, text):
+			call_count +=1
+		return max(0,call_count-1)
+	elif pkg==None and function!="*":
+		for calls in re.finditer(function, text):
+			call_count+=1
+		return max(0,call_count-1)
+	else:
+		return 1
+
 
 def function_analysis(filename):
 	pkgs = parse(filename)
