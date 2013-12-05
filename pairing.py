@@ -25,20 +25,12 @@ def top_modules():
 				master_names[i][1][lookup_dict[pkg]]= stats[pkg]
 	return master_names
 
-def vectors():
-	vector = {'db': 0,
-	'models': 1,
-	'util': 2,
-	'os': 3,
-	're': 4,
-	'httplib2': 5,
-	'socket': 6,
-	'config': 7,
-	'urllib': 8,
-	'simplejson': 9,
-	'numpy': 10,
-	'oauth2client':11,
-	'json': 12,
-	'logging': 13,
-	'random': 14}
-
+def dot_products():
+	f = open("results.txt")
+	exec(f)
+	master = []
+	for i in range(4):
+		for pkg in results[i][1]:
+			if pkg not in master:
+				master.append[pkg]
+		
